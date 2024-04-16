@@ -5,7 +5,7 @@ from streamlit_lottie import st_lottie
 import time
 import pandas as pd
 import os
-from utils.preprocess_user_data import auto_detect_filter_data
+from utils.preprocess_user_data import auto_detect_filter_data, keep_longest_average_columns
 from utils.preprocess_user_data import preprocess_data
 from utils.tokenizer import tokenize_function, call_tokenizer
 from utils.preprocess_text import preprocess
@@ -38,6 +38,41 @@ if choice == 'Home':
     if st.button("きれいなゆき・Bông tuyết trong sạch🤡"):
         st.snow()
 
+# elif choice == 'Upload':
+#     if 'ready_to_input' not in st.session_state:
+#         st.session_state['ready_to_input'] = False
+
+#     # Nút để bắt đầu nhập liệu
+#     if st.button('🤖📢Before upload, please press me if you want to know what we will do👌'):
+#         st.session_state['ready_to_input'] = True  # Đặt trạng thái sẵn sàng nhập
+
+#     # Nếu trạng thái sẵn sàng nhập là True, hiển thị ô nhập văn bản
+#     if st.session_state['ready_to_input']:
+#         user_input = st.text_input("Enter some review about your smartphone 👇", key='user_input',placeholder="This is a placeholder...")
+
+#         # Nếu người dùng nhấn Enter trong ô nhập liệu (text_input luôn trả về giá trị, kể cả chuỗi rỗng)
+#         if 'user_input' in st.session_state and st.session_state.user_input != '':
+#             text = st.session_state.user_input
+#             results = show_predict_text(text)
+#             if results is not None:  # Kiểm tra xem results có phải là None hay không
+#                 for result in results:
+#                     st.write(f'=>{result}\n')     
+#             elif results == None:
+#                 st.write("Sorry, I don't recognize any aspect of smartphone in your review")   
+#         elif 'user_input' in st.session_state and st.session_state.user_input == '':
+#             st.warning('Please ensure to fill some text before hitting enter.')  # Cảnh báo nếu không nhập gì
+#     st.title("Upload your data here")
+#     file = st.file_uploader("We accept various types of data. So don't worry, just go ahead!")
+#     if file:
+#         df = pd.read_csv(file, index_col=None)
+#         df.to_csv('data_user/source.csv', index=None)
+#         st.dataframe(df,use_container_width=True)
+#         st.success("Yahoo! Your data has been uploaded successfully. Now move to the next step for preprocessing🎉",)
+#         st.session_state.file_uploaded = True
+
+
+
+
 elif choice == 'Upload':
     if 'ready_to_input' not in st.session_state:
         st.session_state['ready_to_input'] = False
@@ -48,6 +83,7 @@ elif choice == 'Upload':
 
     # Nếu trạng thái sẵn sàng nhập là True, hiển thị ô nhập văn bản
     if st.session_state['ready_to_input']:
+        
         user_input = st.text_input("Enter some review about your smartphone 👇", key='user_input',placeholder="This is a placeholder...")
 
         # Nếu người dùng nhấn Enter trong ô nhập liệu (text_input luôn trả về giá trị, kể cả chuỗi rỗng)
@@ -63,12 +99,22 @@ elif choice == 'Upload':
             st.warning('Please ensure to fill some text before hitting enter.')  # Cảnh báo nếu không nhập gì
     st.title("Upload your data here")
     file = st.file_uploader("We accept various types of data. So don't worry, just go ahead!")
+    print(file,"file")
     if file:
-        df = pd.read_csv(file, index_col=None)
-        df.to_csv('data_user/source.csv', index=None)
-        st.dataframe(df,use_container_width=True)
+      
+        file_extension = file.name.split(".")[-1]
+        if file_extension in ["csv", "json"]:
+            df = pd.read_csv(file, index_col=None)
+        elif file_extension in ["xlsx", "xls", "xlsm"]:
+            df = pd.read_excel(file, index_col=None)
+        df.to_csv('data_user/source.csv', index=None, encoding='utf-8')
+        st.dataframe(df)
         st.success("Yahoo! Your data has been uploaded successfully. Now move to the next step for preprocessing🎉",)
         st.session_state.file_uploaded = True
+
+
+
+
 elif choice in ['Apply ABSA']:
     if not st.session_state.file_uploaded:
         st.warning("Please upload a file first before proceeding to this step.")
@@ -88,6 +134,11 @@ elif choice in ['Apply ABSA']:
             st.dataframe(show)
             if st.button('Click here if you want know more details🫶'):
                 st.dataframe(df)
+                
+                
+                
+                
+                
 elif choice == 'About us':
     st.markdown("<h1 style='text-align: center; color: black;'>About Us</h1>", unsafe_allow_html=True)
     url_company = "https://jvb-corp.com/vi/"
