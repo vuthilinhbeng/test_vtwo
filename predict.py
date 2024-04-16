@@ -10,13 +10,31 @@ import numpy as np
 import pandas as pd
 from tensorflow.data import Dataset
 
+import urllib.request
+import os
+import streamlit as st
+
 #todo
 from utils.preprocess_user_data import preprocess_data
 
-pretrained_bert = TFAutoModel.from_pretrained(PRETRAINED_MODEL, output_hidden_states=True)
-reloaded_model = create_model(pretrained_bert)
-# reloaded_model.load_weights("F:/jvb/Sentiment-Analysis-leanhtu2/Sentiment-Analysis-leanhtu/model/4_12_2.h5")
-reloaded_model.load_weights(f"{MODEL_PATH}/4_12_2.h5")
+# pretrained_bert = TFAutoModel.from_pretrained(PRETRAINED_MODEL, output_hidden_states=True)
+# reloaded_model = create_model(pretrained_bert)
+# # reloaded_model.load_weights("F:/jvb/Sentiment-Analysis-leanhtu2/Sentiment-Analysis-leanhtu/model/4_12_2.h5")
+# reloaded_model.load_weights(f"{MODEL_PATH}/4_12_2.h5")
+
+
+def load_model():
+    if not os.path.isfile('model.h5'):
+        urllib.request.urlretrieve('https://github.com/vuthilinhbeng/test_vtwo/blob/main/model/4_12_2.h5', 'model/model.h5')
+        pretrained_bert = TFAutoModel.from_pretrained(PRETRAINED_MODEL, output_hidden_states=True)
+        reloaded_model = create_model(pretrained_bert)
+        reloaded_model.load_weights('model/model.h5')
+        return reloaded_model
+
+reloaded_model = load_model()
+reloaded_model.summary()
+
+
 replacements = {0: None, 3: 'positive', 1: 'negative', 2: 'neutral'}
 categories = df_test.columns[1:]
 
