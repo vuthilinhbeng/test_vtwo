@@ -13,7 +13,7 @@ from utils.preprocess_text import preprocess
 from predict import show_predict_csv, show_predict_text
 from annotated_text import annotated_text
 
-import openpyxl
+
 
 st.set_page_config(
     page_title="ML APP",
