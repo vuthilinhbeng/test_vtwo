@@ -70,16 +70,16 @@ elif choice == 'Upload':
     #     st.success("Yahoo! Your data has been uploaded successfully. Now move to the next step for preprocessing🎉",)
     #     st.session_state.file_uploaded = True
     if file:
-         file_extension = file.name.split(".")[-1]
-    if file_extension in ["csv", "json"]:
-        df = pd.read_csv(file, index_col=None)
-    elif file_extension in ["xlsx", "xls", "xlsm"]:
-        df = pd.read_excel(file, index_col=None)
-    df.to_csv('data_user/source.csv', index=None, encoding='utf-8')
-    st.dataframe(df)
-    st.success("Yahoo! Your data has been uploaded successfully. Now move to the next step for preprocessing🎉",)
-    st.session_state.file_uploaded = True  
-        
+        file_extension = file.name.split(".")[-1]
+        if file_extension in ["csv", "json"]:
+            df = pd.read_csv(file, index_col=None)
+        elif file_extension in ["xlsx", "xls", "xlsm"]:
+            df = pd.read_excel(file, index_col=None)
+        df.to_csv('data_user/source.csv', index=None, encoding='utf-8')
+        st.dataframe(df)
+        st.success("Yahoo! Your data has been uploaded successfully. Now move to the next step for preprocessing🎉",)
+        st.session_state.file_uploaded = True  
+            
 elif choice in ['Apply ABSA']:
     if not st.session_state.file_uploaded:
         st.warning("Please upload a file first before proceeding to this step.")
