@@ -1,0 +1,14 @@
+pandas
+regex
+numpy
+tensorflow==2.15
+demoji
+underthesea
+transformers
+datasets==2.18
+nltk
+matplotlib
+streamlit
+requests
+streamlit_lottie
+st-annotated-text
