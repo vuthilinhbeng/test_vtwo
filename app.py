@@ -72,7 +72,6 @@ if choice == 'Home':
 
 
 
-
 elif choice == 'Upload':
     if 'ready_to_input' not in st.session_state:
         st.session_state['ready_to_input'] = False
@@ -110,7 +109,7 @@ elif choice == 'Upload':
         df.to_csv('data_user/source.csv', index=None, encoding='utf-8')
         st.dataframe(df)
         st.success("Yahoo! Your data has been uploaded successfully. Now move to the next step for preprocessing🎉",)
-        st.session_state.file_uploaded = True
+        st.session_state.file_uploaded = True   
 
 
 
