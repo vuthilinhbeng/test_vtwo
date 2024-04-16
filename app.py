@@ -9,11 +9,10 @@ from utils.preprocess_user_data import auto_detect_filter_data, keep_longest_ave
 from utils.preprocess_user_data import preprocess_data
 from utils.tokenizer import tokenize_function, call_tokenizer
 from utils.preprocess_text import preprocess
-# from predict import show_predict_text,show_predict_csv
 from predict import show_predict_csv, show_predict_text
 from annotated_text import annotated_text
-
 import openpyxl
+
 
 st.set_page_config(
     page_title="ML APP",
