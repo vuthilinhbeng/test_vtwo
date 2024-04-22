@@ -13,17 +13,6 @@ from predict import show_predict_text,process_predict_csv, show_predict_csv
 from annotated_text import annotated_text
 
 
-css = """
-<style>
-.dataframe {
-    width: 80%; /* Đặt chiều rộng của DataFrame */
-    margin: auto; /* Đặt lề tự động để căn giữa */
-}
-</style>
-"""
-st.write(css, unsafe_allow_html=True)
-
-st.write(f'<style>{css}</style>', unsafe_allow_html=True)
 
 # Initialize session state for file upload status
 if 'file_uploaded' not in st.session_state:
