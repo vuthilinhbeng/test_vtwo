@@ -15,7 +15,7 @@ import os
 import streamlit as st
 from utils.config import MAX_SEQUENCE_LENGTH
 
-# # web services
+# web services
 @st.cache_resource
 def load_model():
     if not os.path.isfile('model.h5'):

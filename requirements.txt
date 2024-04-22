@@ -15,3 +15,12 @@ st-annotated-text
 emoji
 openpyxl
 seaborn
+
+
+
+
+
+
+
+
+
