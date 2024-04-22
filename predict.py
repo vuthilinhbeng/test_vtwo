@@ -25,7 +25,7 @@ def load_model():
         reloaded_model.load_weights('model.h5')
         return reloaded_model
 
-# reloaded_model = load_model()
+reloaded_model = load_model()
 
 # pretrained_bert = TFAutoModel.from_pretrained(PRETRAINED_MODEL, output_hidden_states=True)
 # reloaded_model = create_model(pretrained_bert)
