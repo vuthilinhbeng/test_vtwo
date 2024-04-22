@@ -1,14 +1,15 @@
-import pandas as pd
-from utils.preprocess_text import preprocess
-import os
 TF_ENABLE_ONEDNN_OPTS='0'
 import tensorflow
 import pandas as pd
 import json
 import csv
 import os
-from tensorflow.data import Dataset
 from utils.tokenizer import call_tokenizer
+import re
+from utils.preprocess_text import preprocess
+import matplotlib.pyplot as plt
+
+
 def auto_detect_filter_data(input_path, output_path):
     # Đọc dữ liệu từ file vào một DataFrame
     df = pd.read_csv(input_path)
@@ -63,3 +64,61 @@ def keep_longest_average_columns(input_file, output_file):
                 longest_average_length = max(average_length for average_length in column_lengths)
                 longest_average_values = [value for value in data.values() if len(str(value)) == longest_average_length]
                 csv_writer.writerow(longest_average_values)
+                
+                
+                
+                
+def take_info(df):
+    """
+    Đếm số lần xuất hiện của các aspect đã được chỉ định từ cột "label" trong DataFrame.
+
+    Parameters:
+    - df (DataFrame): DataFrame chứa cột "label" cần kiểm tra.
+
+    Returns:
+    DataFrame: DataFrame chứa hai cột "aspect" và "số lần xuất hiện".
+    """
+    regex = r'(\w+),\w+,\d+\.\d+,\d+'
+
+    aspect_list = ['CAMERA','SCREEN','GENERAL','STORAGE','PERFORMANCE','SERACC','BATTERY','PRICE','DESIGN','FEATURES']
+
+    aspect_counts = {aspect: 0 for aspect in aspect_list}
+
+    for label in df['label']:
+        # Kiểm tra nếu giá trị là chuỗi
+        if isinstance(label, str):
+            matches = re.findall(regex, label)
+            for aspect in matches:
+                if aspect in aspect_list:
+                    aspect_counts[aspect] += 1
+
+    # Tạo DataFrame từ dict aspect_counts
+    aspect_df = pd.DataFrame(aspect_counts.items(), columns=['Aspect', 'Frequency'])
+    return aspect_df
+
+def sentiments_frequency(df):
+    # Define a regular expression pattern to extract sentiment values
+    pattern = r"'[^']*?,([^']*?),"
+
+    # Initialize an empty list to store extracted sentiment values
+    sentiments = []
+
+    # Iterate over each row in the 'label' column and apply the regex pattern
+    for row in df['label']:
+        matches = re.findall(pattern, str(row))
+        for match in matches:
+            sentiment = match.strip()
+            sentiments.append(sentiment)
+
+    # Count frequency of each sentiment
+    sentiment_counts = {}
+    for sentiment in sentiments:
+        if sentiment in sentiment_counts:
+            sentiment_counts[sentiment] += 1
+        else:
+            sentiment_counts[sentiment] = 1
+
+    # Create DataFrame from sentiment_counts dictionary
+    sentiments_df = pd.DataFrame(sentiment_counts.items(), columns=['sentiments', 'frequency'])
+
+    return sentiments_df

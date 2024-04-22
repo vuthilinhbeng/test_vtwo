@@ -14,3 +14,4 @@ streamlit_lottie
 st-annotated-text
 emoji
 openpyxl
+seaborn
