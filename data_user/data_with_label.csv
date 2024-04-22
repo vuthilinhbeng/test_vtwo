@@ -1,6 +1,6 @@
 content,label
 bhhsj,
-nhận được hàng trong vòng khoảng 1 tuần. Hàng nguyên hộp mới mẫu mã ổn trong tầm giá. Sử dụng chưa thấy vấn đề gì,"['GENERAL,neutral,0.91,3', 'PRICE,neutral,0.92,3', 'DESIGN,positive,0.96,5']"
-"hàng ổn, có điều là không có phiếu bảo hành. mua kiểu này là hên xui.","['GENERAL,positive,0.98,5', 'SERACC,negative,0.76,1']"
-Giao nhanh sản phẩm tốt full box nè shop uy tín lắm,"['GENERAL,positive,0.98,5', 'SERACC,positive,0.98,5']"
-"Hàng full mới, đẹp tốt","['DESIGN,positive,1.00,5']"
+sản phẩm này tệ quá đi,"['GENERAL,negative,1.00,1']"
+sản phẩm này tệ quá đi,"['GENERAL,negative,1.00,1']"
+sản phẩm này tốt,"['GENERAL,positive,1.00,5']"
+sản phẩm này giá tốt nhưng dùng quá tệ,"['GENERAL,negative,0.61,1', 'PRICE,positive,0.96,5']"
